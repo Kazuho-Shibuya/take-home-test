@@ -7,8 +7,9 @@ RSpec.describe Income, type: :model do
   end
 
   describe "#validations" do
+    let(:income) { FactoryBot.build(:income) }
+
     it "is valid with a name and amount" do
-      income = FactoryBot.build(:income)
       expect(income).to be_valid
     end
 
@@ -20,6 +21,23 @@ RSpec.describe Income, type: :model do
     it "is invalid without amount" do
       income = FactoryBot.build(:income, amount: nil)
       expect(income).to be_invalid
+    end
+
+    it 'requires positive integer' do
+      income.amount = 42
+      expect(income.valid?).to be true
+
+      income.amount = 0
+      expect(income.valid?).to be false
+
+      income.amount = -1
+      expect(income.valid?).to be false
+
+      income.amount = 2147483647
+      expect(income.valid?).to be true
+
+      income.amount = 2147483648
+      expect(income.valid?).to be false
     end
   end
 end

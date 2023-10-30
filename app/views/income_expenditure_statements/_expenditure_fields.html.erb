@@ -1,8 +1,11 @@
-<div class="my-5">
-  <%= f.label :name %>
-  <%= f.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-</div>
-<div class="my-5">
-  <%= f.label :amount %>
-  <%= f.number_field :amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+<div class="nested-fields">
+  <div class="my-5">
+    <%= f.label :name, "Expenditure name" %>
+    <%= f.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= f.label :amount, "Expenditure amount" %>
+    <%= f.number_field :amount, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
 </div>
