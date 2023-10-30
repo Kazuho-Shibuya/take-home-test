@@ -12,29 +12,34 @@
   <% end %>
 
   <div class="my-5">
+    <%= form.label :user_id %>
+    <%= form.collection_select :user_id, User.all, :id, :name, { include_blank: "Choose a user" }, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="mt-5 mb-10">
+    <%= link_to "New user", new_user_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium" %>
+  </div>
+
+  <h2 class="text-2xl font-semibold">Incomes</h2>
+  <div class="my-5">
     <%= form.fields_for :incomes do |i| %>
       <%= render "income_fields", f: i %>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= link_to_add_association 'Add', form, :incomes %>
+  <div class="mt-5 mb-10">
+    <%= link_to_add_association 'Add', form, :incomes, class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium" %>
   </div>
 
+  <h2 class="text-2xl font-semibold">Expenditures</h2>
   <div class="my-5">
     <%= form.fields_for :expenditures do |i| %>
       <%= render "expenditure_fields", f: i %>
     <% end %>
   </div>
 
-  <div class="field">
-    <%= link_to_add_association 'Add', form, :expenditures %>
-  </div>
-
-
-  <div class="my-5">
-    <%= form.label :user_id %>
-    <%= form.collection_select :user_id, User.all, :id, :name, include_blank: "None", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="mt-5 mb-10">
+    <%= link_to_add_association 'Add', form, :expenditures, class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium" %>
   </div>
 
   <div class="inline">

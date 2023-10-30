@@ -1,17 +1,22 @@
 <div id="<%= dom_id income_expenditure_statement %>">
   <p class="my-5">
+    <strong class="block font-medium mb-1">User:</strong>
+    <%= income_expenditure_statement.user.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Month:</strong>
+    <%= income_expenditure_statement.created_at.strftime("%Y%m") %>
+  </p>
+
+  <p class="my-5">
     <strong class="block font-medium mb-1">Disposable income:</strong>
-    <%= income_expenditure_statement.disposable_income %>
+    <%= number_to_currency(income_expenditure_statement.disposable_income, unit: "£") %>
   </p>
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Rating:</strong>
     <%= income_expenditure_statement.rating %>
-  </p>
-
-  <p class="my-5">
-    <strong class="block font-medium mb-1">User:</strong>
-    <%= income_expenditure_statement.user_id %>
   </p>
 
   <% if action_name != "show" %>
