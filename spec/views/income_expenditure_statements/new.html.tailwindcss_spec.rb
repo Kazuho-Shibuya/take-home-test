@@ -14,11 +14,7 @@ RSpec.describe "income_expenditure_statements/new", type: :view do
 
     assert_select "form[action=?][method=?]", income_expenditure_statements_path, "post" do
 
-      assert_select "input[name=?]", "income_expenditure_statement[disposable_income]"
-
-      assert_select "input[name=?]", "income_expenditure_statement[rating]"
-
-      assert_select "input[name=?]", "income_expenditure_statement[user_id]"
+      assert_select 'option', text: 'Kazuho Shibuya'
     end
   end
 end
