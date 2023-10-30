@@ -1,0 +1,22 @@
+<div id="<%= dom_id income_expenditure_statement %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Disposable income:</strong>
+    <%= income_expenditure_statement.disposable_income %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Rating:</strong>
+    <%= income_expenditure_statement.rating %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">User:</strong>
+    <%= income_expenditure_statement.user_id %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this income expenditure statement", income_expenditure_statement, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this income expenditure statement", edit_income_expenditure_statement_path(income_expenditure_statement), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

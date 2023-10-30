@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_29_230914) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_29_235247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "income_expenditure_statements", force: :cascade do |t|
+    t.integer "disposable_income", null: false
+    t.string "rating", limit: 1, null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_income_expenditure_statements_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", limit: 50, null: false
@@ -20,4 +29,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_29_230914) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "income_expenditure_statements", "users"
 end

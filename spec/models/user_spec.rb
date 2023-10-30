@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  describe "#associations" do
+    it { should have_many(:income_expenditure_statements).dependent(:destroy) }
+  end
+
   describe "#validations" do
     it "is valid with a name" do
       user = FactoryBot.build(:user)
