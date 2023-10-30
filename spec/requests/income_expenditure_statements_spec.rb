@@ -18,13 +18,39 @@ RSpec.describe "/income_expenditure_statements", type: :request do
   # IncomeExpenditureStatement. As you add validations to IncomeExpenditureStatement, be sure to
   # adjust the attributes here as well.
   user = FactoryBot.create(:user)
+  income = FactoryBot.create(:income)
+  expenditure = FactoryBot.create(:expenditure)
 
   let(:valid_attributes) {
-    { disposable_income: 5000, rating: "A", user_id: user.id }
+    {
+      disposable_income: 5000,
+      rating: "A",
+      user_id: user.id,
+      incomes_attributes: {
+        "0": { user_id: user.id, name: "Salary", amount: 1000 },
+        "1": { user_id: user.id, name: "Other", amount: 2000 }
+      },
+      expenditures_attributes: {
+        "0": { user_id: user.id, name: "Travel", amount: 100 },
+        "1": { user_id: user.id, name: "Food", amount: 300 }
+      }
+    }
   }
 
   let(:invalid_attributes) {
-    { disposable_income: nil, rating: nil, user_id: nil }
+    {
+      disposable_income: nil,
+      rating: nil,
+      user_id: nil,
+      incomes_attributes: {
+        "0": { user_id: nil, name: nil, amount: nil },
+        "1": { user_id: nil, name: nil, amount: nil }
+      },
+      expenditures_attributes: {
+        "0": { user_id: nil, name: nil, amount: nil },
+        "1": { user_id: nil, name: nil, amount: nil }
+      }
+    }
   }
 
   describe "GET /index" do
@@ -91,15 +117,27 @@ RSpec.describe "/income_expenditure_statements", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        { disposable_income: 5000, rating: "D" }
+        {
+          # disposable_income: 50000,
+          # rating: "B",
+          user_id: user.id,
+          incomes_attributes: {
+            "0": { user_id: user.id, name: "Invest", amount: 1000 },
+            "1": { user_id: user.id, name: "Other", amount: 2000 }
+          },
+          expenditures_attributes: {
+            "0": { user_id: user.id, name: "Travel", amount: 100 },
+            "1": { user_id: user.id, name: "Food", amount: 300 }
+          }
+        }
       }
 
       it "updates the requested income_expenditure_statement" do
         income_expenditure_statement = IncomeExpenditureStatement.create! valid_attributes
         patch income_expenditure_statement_url(income_expenditure_statement), params: { income_expenditure_statement: new_attributes }
         income_expenditure_statement.reload
-        expect(income_expenditure_statement.disposable_income).to eq new_attributes[:disposable_income]
-        expect(income_expenditure_statement.rating).to eq new_attributes[:rating]
+        expect(income_expenditure_statement.disposable_income).to eq 2600
+        expect(income_expenditure_statement.rating).to eq "B"
       end
 
       it "redirects to the income_expenditure_statement" do
