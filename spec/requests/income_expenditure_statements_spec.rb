@@ -17,14 +17,13 @@ RSpec.describe "/income_expenditure_statements", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # IncomeExpenditureStatement. As you add validations to IncomeExpenditureStatement, be sure to
   # adjust the attributes here as well.
-  user = FactoryBot.create(:user)
-  income = FactoryBot.create(:income)
-  expenditure = FactoryBot.create(:expenditure)
+
+  let(:user) { FactoryBot.create(:user) }
 
   let(:valid_attributes) {
     {
-      disposable_income: 5000,
-      rating: "A",
+      disposable_income: 2600,
+      rating: "B",
       user_id: user.id,
       incomes_attributes: {
         "0": { user_id: user.id, name: "Salary", amount: 1000 },
@@ -55,7 +54,6 @@ RSpec.describe "/income_expenditure_statements", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      IncomeExpenditureStatement.create! valid_attributes
       get income_expenditure_statements_url
       expect(response).to be_successful
     end
@@ -118,16 +116,14 @@ RSpec.describe "/income_expenditure_statements", type: :request do
     context "with valid parameters" do
       let(:new_attributes) {
         {
-          # disposable_income: 50000,
-          # rating: "B",
           user_id: user.id,
           incomes_attributes: {
-            "0": { user_id: user.id, name: "Invest", amount: 1000 },
+            "0": { user_id: user.id, name: "Invest", amount: 10000 },
             "1": { user_id: user.id, name: "Other", amount: 2000 }
           },
           expenditures_attributes: {
-            "0": { user_id: user.id, name: "Travel", amount: 100 },
-            "1": { user_id: user.id, name: "Food", amount: 300 }
+            "0": { user_id: user.id, name: "Travel", amount: 50 },
+            "1": { user_id: user.id, name: "Food", amount: 200 }
           }
         }
       }
@@ -136,8 +132,8 @@ RSpec.describe "/income_expenditure_statements", type: :request do
         income_expenditure_statement = IncomeExpenditureStatement.create! valid_attributes
         patch income_expenditure_statement_url(income_expenditure_statement), params: { income_expenditure_statement: new_attributes }
         income_expenditure_statement.reload
-        expect(income_expenditure_statement.disposable_income).to eq 2600
-        expect(income_expenditure_statement.rating).to eq "B"
+        expect(income_expenditure_statement.disposable_income).to eq 11750
+        expect(income_expenditure_statement.rating).to eq "A"
       end
 
       it "redirects to the income_expenditure_statement" do

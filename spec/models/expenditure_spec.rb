@@ -1,14 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Expenditure, type: :model do
+
   describe "#associations" do
     it { should belong_to(:user) }
     it { should belong_to(:income_expenditure_statement) }
   end
 
   describe "#validations" do
+    let(:expenditure) { FactoryBot.build(:expenditure) }
+
     it "is valid with a name and amount" do
-      expenditure = FactoryBot.build(:expenditure)
       expect(expenditure).to be_valid
     end
 
@@ -23,8 +25,6 @@ RSpec.describe Expenditure, type: :model do
     end
 
     it 'requires positive integer' do
-      expenditure = FactoryBot.build(:expenditure)
-
       expenditure.amount = 42
       expect(expenditure.valid?).to be true
 
