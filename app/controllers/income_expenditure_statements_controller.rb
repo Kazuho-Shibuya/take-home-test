@@ -75,45 +75,16 @@ class IncomeExpenditureStatementsController < ApplicationController
         expenditures_attributes:[ :id, :user_id, :name, :amount, :_destroy ]
       )
 
-      # Add user_id for incomes and expenditures
-      permited[:incomes_attributes] = merge_user_id(permited[:incomes_attributes], permited[:user_id])
-      permited[:expenditures_attributes] = merge_user_id(permited[:expenditures_attributes], permited[:user_id])
+      # Merge user_id for incomes and expenditures
+      permited[:incomes_attributes] = IncomeExpenditureStatement.merge_user_id(permited[:incomes_attributes], permited[:user_id])
+      permited[:expenditures_attributes] = IncomeExpenditureStatement.merge_user_id(permited[:expenditures_attributes], permited[:user_id])
 
-      total_income = calculate_total(permited[:incomes_attributes])
-      total_expenditure = calculate_total(permited[:expenditures_attributes])
+      total_income = IncomeExpenditureStatement.calculate_total(permited[:incomes_attributes])
+      total_expenditure = IncomeExpenditureStatement.calculate_total(permited[:expenditures_attributes])
 
-      permited[:disposable_income] = total_income - total_expenditure
-      permited[:rating] = determine_rating(total_income, total_expenditure)
+      permited[:disposable_income] = IncomeExpenditureStatement.calculate_disposable_income(total_income, total_expenditure)
+      permited[:rating] = IncomeExpenditureStatement.determine_rating(total_income, total_expenditure)
 
       permited
-    end
-
-    def merge_user_id(attributes, user_id)
-      attributes.each do |attribute|
-        attribute[1].merge!(user_id: user_id)
-      end
-      attributes
-    end
-
-    def calculate_total(attributes)
-      amounts = []
-      attributes.each do |attribute|
-        amounts.push(attribute[1][:amount].to_i)
-      end
-      amounts.sum
-    end
-
-    def determine_rating(total_income, total_expenditure)
-      ratio = total_expenditure.to_f / total_income.to_f * 100
-      case ratio
-      when 0..10 then
-        "A"
-      when 10..30 then
-        "B"
-      when 30..50 then
-        "C"
-      else
-        "D"
-      end
     end
 end
