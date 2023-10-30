@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe "#associations" do
     it { should have_many(:income_expenditure_statements).dependent(:destroy) }
+    it { should have_many(:incomes).dependent(:destroy) }
+    it { should have_many(:expenditures).dependent(:destroy) }
   end
 
   describe "#validations" do
