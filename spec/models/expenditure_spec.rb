@@ -21,5 +21,24 @@ RSpec.describe Expenditure, type: :model do
       expenditure = FactoryBot.build(:expenditure, amount: nil)
       expect(expenditure).to be_invalid
     end
+
+    it 'requires positive integer' do
+      expenditure = FactoryBot.build(:expenditure)
+
+      expenditure.amount = 42
+      expect(expenditure.valid?).to be true
+
+      expenditure.amount = 0
+      expect(expenditure.valid?).to be false
+
+      expenditure.amount = -1
+      expect(expenditure.valid?).to be false
+
+      expenditure.amount = 2147483647
+      expect(expenditure.valid?).to be true
+
+      expenditure.amount = 2147483648
+      expect(expenditure.valid?).to be false
+    end
   end
 end
