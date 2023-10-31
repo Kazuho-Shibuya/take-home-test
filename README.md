@@ -11,6 +11,7 @@ If you have any questions, please let me know. Thank you for reading this far.
 ## How to run the web app locally
 Ruby 3.2.2 & Rails 7.0.8
 
+```
 1. git clone git@github.com:Kazuho-Shibuya/take-home-test.git
 2. cd take-home-test
 3. bundle install
