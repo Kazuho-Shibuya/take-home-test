@@ -3,7 +3,7 @@ class IncomeExpenditureStatementsController < ApplicationController
 
   # GET /income_expenditure_statements or /income_expenditure_statements.json
   def index
-    @income_expenditure_statements = IncomeExpenditureStatement.all
+    @income_expenditure_statements = IncomeExpenditureStatement.all.order(created_at: :desc)
   end
 
   # GET /income_expenditure_statements/1 or /income_expenditure_statements/1.json
